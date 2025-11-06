@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import TrustRow from "@/components/TrustRow";
 import HowItWorks from "@/components/HowItWorks";
+import Features from "@/components/Features";
 
 const Index = () => {
   return (
@@ -10,6 +11,7 @@ const Index = () => {
       <Hero />
       <TrustRow />
       <HowItWorks />
+      <Features />
     </div>
   );
 };
