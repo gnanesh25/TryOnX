@@ -1,35 +1,27 @@
 import { Upload, ShoppingBag, Sparkles, Heart } from "lucide-react";
-
 const HowItWorks = () => {
-  const steps = [
-    {
-      number: "01",
-      icon: Upload,
-      title: "Upload your photo",
-      description: "Take or upload a clear, full-body photo against a plain background. We guide you with a pose outline for best results."
-    },
-    {
-      number: "02",
-      icon: ShoppingBag,
-      title: "Pick an outfit",
-      description: "Choose tops, bottoms, dresses, or full looks from the catalog. Filter by size, fit, occasion, and brand."
-    },
-    {
-      number: "03",
-      icon: Sparkles,
-      title: "AI generates your look",
-      description: "Our model maps the outfit to your body shape and pose to create a realistic try-on preview."
-    },
-    {
-      number: "04",
-      icon: Heart,
-      title: "Save or buy",
-      description: "Save the look, share it with friends, or continue to the brand/store to purchase."
-    }
-  ];
-
-  return (
-    <section className="py-24 bg-background">
+  const steps = [{
+    number: "01",
+    icon: Upload,
+    title: "Upload your photo",
+    description: "Take or upload a clear, full-body photo against a plain background. We guide you with a pose outline for best results."
+  }, {
+    number: "02",
+    icon: ShoppingBag,
+    title: "Pick an outfit",
+    description: "Choose tops, bottoms, dresses, or full looks from the catalog. Filter by size, fit, occasion, and brand."
+  }, {
+    number: "03",
+    icon: Sparkles,
+    title: "AI generates your look",
+    description: "Our model maps the outfit to your body shape and pose to create a realistic try-on preview."
+  }, {
+    number: "04",
+    icon: Heart,
+    title: "Save or buy",
+    description: "Save the look, share it with friends, or continue to the brand/store to purchase."
+  }];
+  return <section className="py-24 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -41,16 +33,10 @@ const HowItWorks = () => {
         {/* Steps grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {steps.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <div 
-                key={index}
-                className="relative group"
-              >
+          const Icon = step.icon;
+          return <div key={index} className="relative group">
                 {/* Connector line (hidden on mobile, shown on desktop) */}
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-primary/30 to-transparent -translate-y-1/2 z-0" />
-                )}
+                {index < steps.length - 1 && <div className="hidden lg:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-primary/30 to-transparent -translate-y-1/2 z-0" />}
                 
                 {/* Card */}
                 <div className="relative bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
@@ -74,22 +60,15 @@ const HowItWorks = () => {
                     {step.description}
                   </p>
                 </div>
-              </div>
-            );
-          })}
+              </div>;
+        })}
         </div>
 
         {/* Privacy notice */}
         <div className="max-w-2xl mx-auto mt-16">
-          <div className="bg-accent border border-primary/20 rounded-xl p-6 text-center">
-            <p className="text-sm text-foreground">
-              <span className="font-semibold">🔒 Your privacy matters:</span> We never use your photos for training without consent. You stay in control.
-            </p>
-          </div>
+          
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HowItWorks;
