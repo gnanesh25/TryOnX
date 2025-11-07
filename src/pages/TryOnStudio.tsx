@@ -8,6 +8,7 @@ import { useState } from "react";
 const TryOnStudio = () => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [selectedOutfit, setSelectedOutfit] = useState<string | null>(null);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-background">
@@ -37,6 +38,8 @@ const TryOnStudio = () => {
             <PreviewArea 
               uploadedImage={uploadedImage} 
               selectedOutfit={selectedOutfit}
+              generatedImage={generatedImage}
+              onGenerate={setGeneratedImage}
             />
             <FitDetails />
           </div>
