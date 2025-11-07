@@ -3,12 +3,22 @@ import UploadPanel from "@/components/studio/UploadPanel";
 import OutfitSelector from "@/components/studio/OutfitSelector";
 import PreviewArea from "@/components/studio/PreviewArea";
 import FitDetails from "@/components/studio/FitDetails";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const TryOnStudio = () => {
+  const [searchParams] = useSearchParams();
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [selectedOutfit, setSelectedOutfit] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+
+  // Pre-select outfit from URL parameter
+  useEffect(() => {
+    const outfitParam = searchParams.get('outfit');
+    if (outfitParam) {
+      setSelectedOutfit(outfitParam);
+    }
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-background">
