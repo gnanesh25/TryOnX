@@ -29,22 +29,16 @@ const Navigation = () => {
               Try On Studio
             </Link>
             <Link 
-              to="/how-it-works" 
+              to="/pricing" 
               className="text-sm font-medium text-foreground hover:text-primary transition-colors"
             >
-              How it Works
+              Pricing
             </Link>
             <Link 
-              to="/catalog" 
+              to="/privacy" 
               className="text-sm font-medium text-foreground hover:text-primary transition-colors"
             >
-              Catalog
-            </Link>
-            <Link 
-              to="/about" 
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-            >
-              About
+              Privacy
             </Link>
           </div>
         </div>
