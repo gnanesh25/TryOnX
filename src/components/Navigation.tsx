@@ -35,10 +35,10 @@ const Navigation = () => {
               Pricing
             </Link>
             <Link 
-              to="/privacy" 
+              to="/about" 
               className="text-sm font-medium text-foreground hover:text-primary transition-colors"
             >
-              Privacy
+              About
             </Link>
           </div>
         </div>

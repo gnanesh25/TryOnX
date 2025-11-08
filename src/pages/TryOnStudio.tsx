@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import UploadPanel from "@/components/studio/UploadPanel";
 import OutfitSelector from "@/components/studio/OutfitSelector";
 import PreviewArea from "@/components/studio/PreviewArea";
@@ -55,6 +56,7 @@ const TryOnStudio = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };
