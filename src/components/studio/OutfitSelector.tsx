@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal } from "lucide-react";
+import { products } from "@/data/products";
 
 interface OutfitSelectorProps {
   onOutfitSelect: (outfitId: string) => void;
@@ -27,13 +28,14 @@ const OutfitSelector = ({ onOutfitSelect }: OutfitSelectorProps) => {
     { value: "new-arrivals", label: "New arrivals" }
   ];
 
-  // Sample outfits - replace with real data
-  const outfits = [
-    { id: "1", name: "Classic White Shirt", category: "top", image: "/placeholder.svg" },
-    { id: "2", name: "Denim Jeans", category: "bottom", image: "/placeholder.svg" },
-    { id: "3", name: "Summer Dress", category: "dress", image: "/placeholder.svg" },
-    { id: "4", name: "Blazer", category: "formal", image: "/placeholder.svg" }
-  ];
+  // Filter products based on selected category
+  const filteredProducts = products.filter((product) => {
+    if (category === "all") return true;
+    if (category === "casual" || category === "formal") {
+      return product.occasion.toLowerCase() === category;
+    }
+    return product.category.toLowerCase() === category;
+  });
 
   return (
     <div className="bg-card border border-border rounded-2xl p-6 shadow-md">
@@ -81,22 +83,22 @@ const OutfitSelector = ({ onOutfitSelect }: OutfitSelectorProps) => {
 
       {/* Outfit Grid */}
       <div className="grid grid-cols-2 gap-3 max-h-[400px] overflow-y-auto">
-        {outfits.map((outfit) => (
+        {filteredProducts.map((product) => (
           <button
-            key={outfit.id}
-            onClick={() => onOutfitSelect(outfit.id)}
+            key={product.id}
+            onClick={() => onOutfitSelect(product.name)}
             className="group bg-muted rounded-lg overflow-hidden hover:ring-2 hover:ring-primary transition-all"
           >
             <div className="aspect-square bg-secondary flex items-center justify-center">
               <img 
-                src={outfit.image} 
-                alt={outfit.name}
+                src={product.image} 
+                alt={product.name}
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="p-2">
               <p className="text-xs font-medium text-foreground group-hover:text-primary transition-colors truncate">
-                {outfit.name}
+                {product.name}
               </p>
             </div>
           </button>
