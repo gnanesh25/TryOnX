@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -5,13 +6,28 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Sparkles, ArrowLeft, Package, Truck, RefreshCcw } from "lucide-react";
+import { Sparkles, ArrowLeft, Package, Truck, RefreshCcw, ShoppingCart } from "lucide-react";
 import { products } from "@/data/products";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const { toast } = useToast();
   const product = products.find(p => p.id === id);
+  const [selectedSize, setSelectedSize] = useState<string>("");
+
+  const handleAddToCart = () => {
+    if (!product) return;
+    const size = selectedSize || product.sizes[0];
+    addToCart(product, size);
+    toast({
+      title: "Added to cart",
+      description: `${product.name} (${size}) added to your cart`,
+    });
+  };
 
   if (!product) {
     return (
@@ -73,16 +89,24 @@ const ProductDetail = () => {
 
             <Separator />
 
-            {/* Try On Button */}
-            <Button 
-              size="lg" 
-              className="w-full"
-              variant="hero"
-              onClick={() => navigate(`/studio?outfit=${product.name}`)}
-            >
-              <Sparkles className="w-5 h-5" />
-              Try this on →
-            </Button>
+            {/* Action Buttons */}
+            <div className="grid grid-cols-2 gap-3">
+              <Button 
+                size="lg" 
+                variant="hero"
+                onClick={() => navigate(`/studio?outfit=${product.name}`)}
+              >
+                <Sparkles className="w-5 h-5" />
+                Try on
+              </Button>
+              <Button 
+                size="lg" 
+                onClick={handleAddToCart}
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
+              </Button>
+            </div>
 
             <Separator />
 
@@ -91,7 +115,12 @@ const ProductDetail = () => {
               <h3 className="font-semibold mb-3 text-foreground">Available Sizes</h3>
               <div className="flex flex-wrap gap-2">
                 {product.sizes.map((size) => (
-                  <Button key={size} variant="outline" className="min-w-[3rem]">
+                  <Button 
+                    key={size} 
+                    variant={selectedSize === size ? "default" : "outline"}
+                    className="min-w-[3rem]"
+                    onClick={() => setSelectedSize(size)}
+                  >
                     {size}
                   </Button>
                 ))}

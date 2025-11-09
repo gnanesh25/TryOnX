@@ -6,14 +6,27 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Sparkles, Eye } from "lucide-react";
+import { Sparkles, Eye, ShoppingCart } from "lucide-react";
 import { products } from "@/data/products";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
 
 const Products = () => {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedGender, setSelectedGender] = useState<string>("All");
   const [selectedOccasion, setSelectedOccasion] = useState<string>("All");
+
+  const handleAddToCart = (product: typeof products[0]) => {
+    const defaultSize = product.sizes[0];
+    addToCart(product, defaultSize);
+    toast({
+      title: "Added to cart",
+      description: `${product.name} (${defaultSize}) added to your cart`,
+    });
+  };
 
   const filteredProducts = products.filter((product) => {
     if (selectedCategory !== "All" && product.category !== selectedCategory) return false;
@@ -137,14 +150,22 @@ const Products = () => {
                   <Sparkles className="w-4 h-4" />
                   Try on me
                 </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full"
-                  onClick={() => navigate(`/product/${product.id}`)}
-                >
-                  <Eye className="w-4 h-4" />
-                  View details
-                </Button>
+                <div className="grid grid-cols-2 gap-2 w-full">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                    Add to Cart
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => navigate(`/product/${product.id}`)}
+                  >
+                    <Eye className="w-4 h-4" />
+                    Details
+                  </Button>
+                </div>
               </CardFooter>
             </Card>
           ))}
