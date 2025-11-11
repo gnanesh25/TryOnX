@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Trash2, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { products } from "@/data/products";
+import RecommendationsSection from "@/components/RecommendationsSection";
 
 interface SavedLook {
   id: string;
@@ -98,6 +99,11 @@ const SavedLooks = () => {
             View and manage your favorite virtual try-on combinations
           </p>
         </div>
+
+        {/* AI Recommendations */}
+        {user && savedLooks.length > 0 && (
+          <RecommendationsSection userId={user.id} />
+        )}
 
         {savedLooks.length === 0 ? (
           <div className="text-center py-12">
