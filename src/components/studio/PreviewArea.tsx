@@ -3,6 +3,8 @@ import { Download, Share2, Save, Flag } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface PreviewAreaProps {
   uploadedImage: string | null;
@@ -13,7 +15,10 @@ interface PreviewAreaProps {
 
 const PreviewArea = ({ uploadedImage, selectedOutfit, generatedImage, onGenerate }: PreviewAreaProps) => {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const generateTryOn = async () => {
@@ -63,8 +68,45 @@ const PreviewArea = ({ uploadedImage, selectedOutfit, generatedImage, onGenerate
     generateTryOn();
   }, [uploadedImage, selectedOutfit, onGenerate, toast]);
 
-  const handleSave = () => {
-    toast({ title: "Look saved", description: "Added to your saved looks" });
+  const handleSave = async () => {
+    if (!user) {
+      toast({ 
+        title: "Sign in required", 
+        description: "Please sign in to save your looks",
+        variant: "destructive"
+      });
+      navigate("/auth");
+      return;
+    }
+
+    if (!generatedImage || !uploadedImage || !selectedOutfit) return;
+
+    setIsSaving(true);
+    try {
+      const { error } = await supabase
+        .from("saved_looks")
+        .insert({
+          user_id: user.id,
+          outfit_id: selectedOutfit,
+          uploaded_image_url: uploadedImage,
+          generated_image_url: generatedImage,
+        });
+
+      if (error) throw error;
+
+      toast({ 
+        title: "Look saved!", 
+        description: "Added to your saved looks. Visit 'My Account' to view all saved looks."
+      });
+    } catch (error: any) {
+      toast({ 
+        title: "Failed to save", 
+        description: error.message || "Something went wrong",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleDownload = () => {
@@ -140,10 +182,10 @@ const PreviewArea = ({ uploadedImage, selectedOutfit, generatedImage, onGenerate
           variant="outline" 
           className="w-full"
           onClick={handleSave}
-          disabled={!generatedImage || isGenerating}
+          disabled={!generatedImage || isGenerating || isSaving}
         >
           <Save className="w-4 h-4" />
-          Save
+          {isSaving ? "Saving..." : "Save"}
         </Button>
         <Button 
           variant="outline" 

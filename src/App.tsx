@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import TryOnStudio from "./pages/TryOnStudio";
 import Products from "./pages/Products";
@@ -12,6 +13,8 @@ import Pricing from "./pages/Pricing";
 import Privacy from "./pages/Privacy";
 import About from "./pages/About";
 import Checkout from "./pages/Checkout";
+import Auth from "./pages/Auth";
+import SavedLooks from "./pages/SavedLooks";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,18 +26,22 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/studio" element={<TryOnStudio />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/checkout" element={<Checkout />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AuthProvider>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/studio" element={<TryOnStudio />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/saved-looks" element={<SavedLooks />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
     </CartProvider>
