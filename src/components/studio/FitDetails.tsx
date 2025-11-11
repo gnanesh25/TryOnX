@@ -1,7 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { ExternalLink, RefreshCw, Info } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const FitDetails = () => {
+interface FitDetailsProps {
+  selectedOutfit: string | null;
+  onReset: () => void;
+}
+
+const FitDetails = ({ selectedOutfit, onReset }: FitDetailsProps) => {
+  const navigate = useNavigate();
+
+  const handleGoToProduct = () => {
+    if (selectedOutfit) {
+      navigate(`/product/${selectedOutfit}`);
+    }
+  };
   return (
     <div className="bg-card border border-border rounded-2xl p-6 shadow-md">
       <h2 className="text-xl font-semibold mb-6 text-card-foreground">Fit & Details</h2>
@@ -37,11 +50,17 @@ const FitDetails = () => {
 
       {/* Call to Actions */}
       <div className="space-y-3">
-        <Button variant="hero" className="w-full" size="lg">
+        <Button 
+          variant="hero" 
+          className="w-full" 
+          size="lg"
+          onClick={handleGoToProduct}
+          disabled={!selectedOutfit}
+        >
           <ExternalLink className="w-4 h-4" />
           Like this outfit? Go to product page
         </Button>
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" className="w-full" onClick={onReset}>
           <RefreshCw className="w-4 h-4" />
           Try another outfit
         </Button>

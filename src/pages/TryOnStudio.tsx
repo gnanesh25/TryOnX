@@ -21,6 +21,12 @@ const TryOnStudio = () => {
     }
   }, [searchParams]);
 
+  const handleReset = () => {
+    setSelectedOutfit(null);
+    setGeneratedImage(null);
+    // Keep uploadedImage so the user can try another outfit with the same photo
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -52,7 +58,10 @@ const TryOnStudio = () => {
               generatedImage={generatedImage}
               onGenerate={setGeneratedImage}
             />
-            <FitDetails />
+            <FitDetails 
+              selectedOutfit={selectedOutfit}
+              onReset={handleReset}
+            />
           </div>
         </div>
       </main>
