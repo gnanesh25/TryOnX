@@ -7,12 +7,16 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1.5rem",
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['"Fira Sans"', "system-ui", "sans-serif"],
+        display: ['"DM Serif Display"', "Georgia", "serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -48,9 +52,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          light: "hsl(var(--gold-light))",
+        },
       },
       backgroundImage: {
         'hero-gradient': 'var(--hero-gradient)',
+        'gold-gradient': 'var(--gold-gradient)',
         'subtle-gradient': 'var(--subtle-gradient)',
       },
       boxShadow: {
@@ -58,6 +67,8 @@ export default {
         'md': 'var(--shadow-md)',
         'lg': 'var(--shadow-lg)',
         'xl': 'var(--shadow-xl)',
+        'elegant': 'var(--shadow-elegant)',
+        'gold': 'var(--shadow-gold)',
       },
       transitionProperty: {
         'smooth': 'var(--transition-smooth)',

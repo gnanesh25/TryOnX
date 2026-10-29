@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Sparkles, Eye, ShoppingCart } from "lucide-react";
+import { Sparkles, ShoppingCart } from "lucide-react";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
@@ -39,28 +39,34 @@ const Products = () => {
   const genders = ["All", "Men", "Women", "Unisex"];
   const occasions = ["All", "Casual", "Formal", "Ethnic"];
 
+  const resetFilters = () => {
+    setSelectedCategory("All");
+    setSelectedGender("All");
+    setSelectedOccasion("All");
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-14">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl mb-3">
             Explore outfits you can <span className="bg-hero-gradient bg-clip-text text-transparent">try right now</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
             Every item here supports AI try-on.
           </p>
         </div>
 
         {/* Filters */}
-        <div className="bg-card border border-border rounded-2xl p-6 mb-8 shadow-md">
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="bg-card border border-border rounded-2xl p-4 mb-6 shadow-md">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="text-sm font-medium mb-2 block text-foreground">Category</label>
+              <label className="text-xs font-medium mb-1.5 block text-muted-foreground">Category</label>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger>
+                <SelectTrigger className="h-9 text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -72,9 +78,9 @@ const Products = () => {
             </div>
 
             <div>
-              <label className="text-sm font-medium mb-2 block text-foreground">Gender</label>
+              <label className="text-xs font-medium mb-1.5 block text-muted-foreground">Gender</label>
               <Select value={selectedGender} onValueChange={setSelectedGender}>
-                <SelectTrigger>
+                <SelectTrigger className="h-9 text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -86,9 +92,9 @@ const Products = () => {
             </div>
 
             <div>
-              <label className="text-sm font-medium mb-2 block text-foreground">Occasion</label>
+              <label className="text-xs font-medium mb-1.5 block text-muted-foreground">Occasion</label>
               <Select value={selectedOccasion} onValueChange={setSelectedOccasion}>
-                <SelectTrigger>
+                <SelectTrigger className="h-9 text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -100,89 +106,77 @@ const Products = () => {
             </div>
           </div>
 
-          <div className="mt-4 flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">
+          <div className="mt-3 flex items-center justify-between">
+            <p className="text-xs text-muted-foreground">
               Showing {filteredProducts.length} of {products.length} products
             </p>
-            <Button 
-              variant="ghost" 
-              onClick={() => {
-                setSelectedCategory("All");
-                setSelectedGender("All");
-                setSelectedOccasion("All");
-              }}
-            >
+            <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={resetFilters}>
               Clear filters
             </Button>
           </div>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Products Grid — compact cards, ~30% smaller */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
           {filteredProducts.map((product) => (
-            <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="relative aspect-[3/4] overflow-hidden bg-muted">
-                <img 
-                  src={product.image} 
+            <Card key={product.id} className="group overflow-hidden hover:shadow-lg hover:border-gold/40 transition-all flex flex-col">
+              <Link
+                to={`/product/${product.id}`}
+                className="relative aspect-[4/5] overflow-hidden bg-muted"
+              >
+                <img
+                  src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <Badge 
-                  className="absolute top-3 left-3 bg-hero-gradient text-white border-0"
-                >
-                  <Sparkles className="w-3 h-3 mr-1" />
-                  Virtual try-on
+                <Badge className="absolute top-2 left-2 bg-hero-gradient text-primary-foreground border-0 text-[9px] px-1.5 py-0 gap-0.5">
+                  <Sparkles className="w-2.5 h-2.5" />
+                  Try-on
                 </Badge>
-              </div>
-              
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-foreground mb-1 line-clamp-2">{product.name}</h3>
-                <p className="text-sm text-muted-foreground mb-2">{product.brand}</p>
-                <p className="text-lg font-bold text-foreground">${product.price}</p>
+              </Link>
+
+              <CardContent className="p-2.5 pb-1 flex-1">
+                <Link to={`/product/${product.id}`}>
+                  <h3 className="text-[13px] leading-tight line-clamp-1 hover:text-primary transition-colors">
+                    {product.name}
+                  </h3>
+                </Link>
+                <p className="text-[11px] text-muted-foreground mb-1">{product.brand}</p>
+                <p className="text-sm font-semibold text-foreground">${product.price}</p>
               </CardContent>
 
-              <CardFooter className="p-4 pt-0 gap-2 flex-col">
-                <Button 
-                  variant="hero" 
-                  className="w-full"
+              <CardFooter className="p-2.5 pt-1 gap-1.5">
+                <Button
+                  variant="hero"
+                  size="sm"
+                  className="flex-1 h-8 text-xs px-2"
                   onClick={() => navigate(`/studio?outfit=${product.name}`)}
                 >
-                  <Sparkles className="w-4 h-4" />
-                  Try on me
+                  <Sparkles className="w-3 h-3" />
+                  Try
                 </Button>
-                <div className="grid grid-cols-2 gap-2 w-full">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    <ShoppingCart className="w-4 h-4" />
-                    Add to Cart
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => navigate(`/product/${product.id}`)}
-                  >
-                    <Eye className="w-4 h-4" />
-                    Details
-                  </Button>
-                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 h-8 text-xs px-2"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  <ShoppingCart className="w-3 h-3" />
+                  Add
+                </Button>
               </CardFooter>
             </Card>
           ))}
         </div>
 
         {filteredProducts.length === 0 && (
-          <div className="text-center py-16">
-            <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-4xl">🔍</span>
+          <div className="text-center py-14">
+            <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-3xl">🔍</span>
             </div>
-            <h3 className="text-xl font-semibold mb-2 text-foreground">No products found</h3>
-            <p className="text-muted-foreground mb-4">Try adjusting your filters</p>
-            <Button onClick={() => {
-              setSelectedCategory("All");
-              setSelectedGender("All");
-              setSelectedOccasion("All");
-            }}>
+            <h3 className="text-lg mb-2 text-foreground">No products found</h3>
+            <p className="text-sm text-muted-foreground mb-4">Try adjusting your filters</p>
+            <Button size="sm" onClick={resetFilters}>
               Clear all filters
             </Button>
           </div>
