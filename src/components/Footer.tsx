@@ -6,8 +6,8 @@ const Footer = () => {
 
   return (
     <footer className="bg-muted/30 border-t border-border mt-auto">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="space-y-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="space-y-6">
           {/* Main Links */}
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
             <Link to="/" className="text-foreground hover:text-primary transition-colors">
