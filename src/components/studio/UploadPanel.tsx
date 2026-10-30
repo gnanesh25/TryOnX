@@ -96,11 +96,11 @@ const UploadPanel = ({ onImageUpload }: UploadPanelProps) => {
   };
 
   return (
-    <div className="bg-card border border-border rounded-2xl p-6 shadow-md">
-      <h2 className="text-xl font-semibold mb-4 text-card-foreground">Upload full-body photo</h2>
+    <div className="bg-card border border-border rounded-2xl p-4 shadow-md">
+      <h2 className="text-base font-semibold mb-3 text-card-foreground">Upload full-body photo</h2>
       
       <div
-        className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
+        className={`border-2 border-dashed rounded-xl p-5 text-center transition-all ${
           isDragging 
             ? 'border-primary bg-primary/5' 
             : 'border-border hover:border-primary/50'
@@ -109,16 +109,16 @@ const UploadPanel = ({ onImageUpload }: UploadPanelProps) => {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-            <Upload className="w-8 h-8 text-primary" />
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+            <Upload className="w-6 h-6 text-primary" />
           </div>
           
-          <div className="space-y-2">
-            <p className="font-medium text-foreground">
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-foreground">
               Drop your photo here or click to browse
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               JPEG, PNG up to 10MB
             </p>
           </div>
@@ -139,13 +139,13 @@ const UploadPanel = ({ onImageUpload }: UploadPanelProps) => {
       </div>
 
       {/* Tips */}
-      <div className="mt-6 space-y-3">
-        <div className="flex items-start gap-2 text-sm text-muted-foreground">
-          <Info className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
+      <div className="mt-4 space-y-2">
+        <div className="flex items-start gap-2 text-xs text-muted-foreground">
+          <Info className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-primary" />
           <p>Stand straight, good lighting, plain background, face visible.</p>
         </div>
         
-        <div className="bg-accent border border-primary/20 rounded-lg p-3 text-sm text-foreground">
+        <div className="bg-accent border border-primary/20 rounded-lg p-2.5 text-xs text-foreground">
           <p className="font-medium">🔒 Your photo is private and can be deleted anytime.</p>
         </div>
       </div>

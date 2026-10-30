@@ -21,17 +21,17 @@ const HowItWorks = () => {
     title: "Save or buy",
     description: "Save the look, share it with friends, or continue to the brand/store to purchase."
   }];
-  return <section className="py-24 bg-background">
+  return <section className="py-16 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">
             How <span className="bg-hero-gradient bg-clip-text text-transparent">TryOnX</span> works
           </h2>
         </div>
 
         {/* Steps grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {steps.map((step, index) => {
           const Icon = step.icon;
           return <div key={index} className="relative group">
@@ -65,7 +65,7 @@ const HowItWorks = () => {
         </div>
 
         {/* Privacy notice */}
-        <div className="max-w-2xl mx-auto mt-16">
+        <div className="max-w-2xl mx-auto mt-8">
           
         </div>
       </div>

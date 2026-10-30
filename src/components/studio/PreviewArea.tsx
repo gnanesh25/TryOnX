@@ -45,6 +45,14 @@ const PreviewArea = ({ uploadedImage, selectedOutfit, generatedImage, onGenerate
             variant: "destructive"
           });
           onGenerate(null);
+        } else if (data?.error) {
+          console.error('Try-on error from server:', data.error);
+          toast({
+            title: "Generation failed",
+            description: data.error,
+            variant: "destructive"
+          });
+          onGenerate(null);
         } else if (data?.imageUrl) {
           onGenerate(data.imageUrl);
           toast({
@@ -129,9 +137,9 @@ const PreviewArea = ({ uploadedImage, selectedOutfit, generatedImage, onGenerate
   };
 
   return (
-    <div className="bg-card border border-border rounded-2xl p-6 shadow-md">
+    <div className="bg-card border border-border rounded-2xl p-4 shadow-md">
       {/* Preview Container */}
-      <div className="aspect-[3/4] bg-muted rounded-xl mb-6 flex items-center justify-center overflow-hidden relative">
+      <div className="aspect-[3/4] bg-muted rounded-xl mb-4 flex items-center justify-center overflow-hidden relative">
         {generatedImage ? (
           <img 
             src={generatedImage} 
@@ -148,12 +156,12 @@ const PreviewArea = ({ uploadedImage, selectedOutfit, generatedImage, onGenerate
               />
             )}
             <div className="absolute inset-0 bg-primary/10 flex items-center justify-center">
-              <div className="bg-background/90 backdrop-blur-sm rounded-xl p-6 text-center max-w-sm">
-                <div className="w-12 h-12 bg-hero-gradient rounded-full flex items-center justify-center mx-auto mb-3 animate-pulse">
-                  <span className="text-2xl">✨</span>
+            <div className="bg-background/90 backdrop-blur-sm rounded-xl p-4 text-center max-w-sm">
+                <div className="w-10 h-10 bg-hero-gradient rounded-full flex items-center justify-center mx-auto mb-2 animate-pulse">
+                  <span className="text-xl">✨</span>
                 </div>
-                <p className="font-semibold text-foreground mb-2">AI Processing...</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="font-semibold text-foreground mb-1">AI Processing...</p>
+                <p className="text-xs text-muted-foreground">
                   Creating your virtual try-on. This takes about 10-15 seconds.
                 </p>
               </div>

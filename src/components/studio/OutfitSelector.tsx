@@ -38,16 +38,16 @@ const OutfitSelector = ({ onOutfitSelect }: OutfitSelectorProps) => {
   });
 
   return (
-    <div className="bg-card border border-border rounded-2xl p-6 shadow-md">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-card-foreground">Select Outfit</h2>
+    <div className="bg-card border border-border rounded-2xl p-4 shadow-md">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-base font-semibold text-card-foreground">Select Outfit</h2>
         <Button variant="ghost" size="sm">
           <SlidersHorizontal className="w-4 h-4" />
         </Button>
       </div>
 
       {/* Filters */}
-      <div className="space-y-4 mb-6">
+      <div className="space-y-3 mb-4">
         <div>
           <label className="text-sm font-medium text-foreground mb-2 block">Category</label>
           <Select value={category} onValueChange={setCategory}>
@@ -82,7 +82,7 @@ const OutfitSelector = ({ onOutfitSelect }: OutfitSelectorProps) => {
       </div>
 
       {/* Outfit Grid */}
-      <div className="grid grid-cols-2 gap-3 max-h-[400px] overflow-y-auto">
+      <div className="grid grid-cols-3 gap-2 max-h-[320px] overflow-y-auto">
         {filteredProducts.map((product) => (
           <button
             key={product.id}
