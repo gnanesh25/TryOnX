@@ -45,6 +45,14 @@ const PreviewArea = ({ uploadedImage, selectedOutfit, generatedImage, onGenerate
             variant: "destructive"
           });
           onGenerate(null);
+        } else if (data?.error) {
+          console.error('Try-on error from server:', data.error);
+          toast({
+            title: "Generation failed",
+            description: data.error,
+            variant: "destructive"
+          });
+          onGenerate(null);
         } else if (data?.imageUrl) {
           onGenerate(data.imageUrl);
           toast({
