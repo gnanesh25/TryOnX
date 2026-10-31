@@ -4,6 +4,7 @@
 - [x] Compact Try-On Studio panels (upload, outfits, preview, fit details)
 - [x] Tighten homepage/section/footer spacing; fix empty Features section
 - [x] Security scan (1 warning only) before publish
-- [ ] Push draft work to GitHub (PR via gitremote_pr) — needs user merge to trigger Vercel deploy
-- [ ] Verify try-on-x-inky.vercel.app homepage + /products refresh after Vercel picks up the code
-- [ ] Try-on generation still failing: AI Gateway credits exhausted (402) — user must add credits in workspace billing; function fix deploys on draft accept
+- [x] Push draft work to GitHub (PR on gnanesh25/TryOnX)
+- [x] Queue draft acceptance into the main project (applies UI + function fixes)
+- [ ] After user merges the PR: verify try-on-x-inky.vercel.app homepage + /products refresh
+- [ ] Try-on generation blocked by exhausted AI credits — user must add credits in workspace billing
